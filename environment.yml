@@ -1,0 +1,11 @@
+name: ms-gut-microbiota
+channels:
+ - conda-forge
+ - default
+# add any additional dependencies needed
+dependencies:
+ - python=3.10
+ - ipykernel
+ - matplotlib
+ - numpy
+ - pandas

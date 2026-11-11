@@ -1,15 +1,13 @@
 import pandas as pd
 
 df1_samples = pd.read_excel("data/Table_S1_Participant_and_samples.xlsx", sheet_name = "Sample phenotype")
-
 df2_species = pd.read_excel("data/Table_S5_Metagenomics_data.xlsx", sheet_name = "species")
 
+df2_species = df2_species.set_index("Taxa")
+
 #flip axis on df2 
-
 df2_species = df2_species.T
-
-df2_species.index.name = "iMSMS_ID"
-
+df2_species.index.name = "iMSMS_ID" 
 df2_species = df2_species.reset_index()
 
 merged_samples_species = df1_samples.merge(df2_species, on = "iMSMS_ID", how = "inner")
@@ -18,8 +16,19 @@ print("df1", df1_samples.shape)
 print("df2", df2_species.shape)
 print("merged", merged_samples_species.shape)
 
-df1_samples_02 = pd.read_excel("data/mmc3.xlsx", sheet_name = "Microbiome particpants")
+print("number of columns:", len(merged_samples_species.columns)) #1737 columns 
+print("number of rows:", len(merged_samples_species.index)) #1152 rows 
+#print("names of columns:", merged_samples_species.columns.tolist()) #Uncomment for names to print 
+merged_samples_species = merged_samples_species.set_index("iMSMS_ID")
+#print("names of rows", merged_samples_species.index.tolist()) #Uncomment for names to print
 
+cohort_pos = merged_samples_species.columns.get_loc("Cohort")
+taxa_cols = merged_samples_species.columns[cohort_pos + 1:]
+print("number of species features:", len(taxa_cols)) #1677 features 
+
+#############################################################################################################################
+
+df1_samples_02 = pd.read_excel("data/mmc3.xlsx", sheet_name = "Microbiome particpants")
 df2_species_02 = pd.read_excel("data/mmc4.xlsx", sheet_name = "Species")
 
 id_col = df2_species_02.columns[0]
@@ -31,3 +40,43 @@ merged_samples_species_02 = df1_samples_02.merge(df2_species_02, on = "FD", how 
 print("df1", df1_samples_02.shape)
 print("df2", df2_species_02.shape)
 print("merged", merged_samples_species_02.shape)
+
+print("number of columns:", len(merged_samples_species_02.columns)) #707 columns
+print("number of row:", len(merged_samples_species_02.index)) #187 rows
+#print("names of columns:", merged_samples_species_02.columns.tolist()) #Uncomment for names to print
+merged_samples_species_02 = merged_samples_species_02.set_index("FD") #Uncomment for names to print 
+#print("names of rows", merged_samples_species_02.index.tolist())
+
+pt_pos = merged_samples_species_02.columns.get_loc("Previous treatments")
+taxa_cols_02 = merged_samples_species_02.columns[pt_pos + 1:]
+print("number of species features:", len(taxa_cols_02)) #1677 features 
+
+###############################################################################################################################
+
+#### More Parsing Through DataSet 1 ####
+
+print(merged_samples_species['treatment_status'].value_counts().reindex(['Treated', 'Untreated', 'Control']))
+
+#Treated: 367 -- Testing Data -- 
+
+#Untreated: 209 -- Training Data -- 
+
+#Control: 576 
+
+print(merged_samples_species['site'].value_counts().reindex(['San Francisco', 'Boston', 'New York', 'Edinburgh', 'Buenos Aires', 'San Sebastian', 'Pittsburgh']))
+
+#All subjects fine for now because models will be healthy vs MS 
+
+#San Francisco: 328 subjects
+
+#Boston: 84 subjects  
+
+#New York: 118 subjects 
+
+#Edinburgh: 262 subjects 
+
+#Buenos Aires: 258 subjects 
+
+#San Sebastian: 78 subjects
+
+#Pittsburgh: 24 subjects 

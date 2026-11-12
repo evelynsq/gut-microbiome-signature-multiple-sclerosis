@@ -26,6 +26,10 @@ cohort_pos = merged_samples_species.columns.get_loc("Cohort")
 taxa_cols = merged_samples_species.columns[cohort_pos + 1:]
 print("number of species features:", len(taxa_cols)) #1677 features 
 
+#removing features not needed - not species features
+data = merged_samples_species.iloc[:, merged_samples_species.columns.get_loc("Cohort") + 1:]
+#print("Just Species Features Named:", data.columns.tolist()) #Uncomment for just species features apart of excess column cleaned data to print 
+
 #############################################################################################################################
 
 df1_samples_02 = pd.read_excel("data/mmc3.xlsx", sheet_name = "Microbiome particpants")
@@ -50,6 +54,10 @@ merged_samples_species_02 = merged_samples_species_02.set_index("FD") #Uncomment
 pt_pos = merged_samples_species_02.columns.get_loc("Previous treatments")
 taxa_cols_02 = merged_samples_species_02.columns[pt_pos + 1:]
 print("number of species features:", len(taxa_cols_02)) #1677 features 
+
+#removing features not needed - not species features
+data_2 = merged_samples_species_02.iloc[:, merged_samples_species_02.columns.get_loc("Previous treatments") + 1:]
+#print("Just Species Features Named:", data_2.columns.tolist()) #Uncomment for just species features apart of excess column cleaned data to print 
 
 ###############################################################################################################################
 
@@ -79,4 +87,22 @@ print(merged_samples_species['site'].value_counts().reindex(['San Francisco', 'B
 
 #San Sebastian: 78 subjects
 
-#Pittsburgh: 24 subjects 
+#Pittsburgh: 24 subjects
+
+
+# M vs. F 
+
+print(merged_samples_species['sex'].value_counts().reindex(['M', 'F']))
+
+#Total F: 601
+#Total M: 551 
+
+print(pd.crosstab(merged_samples_species['treatment_status'], merged_samples_species['sex']))
+
+#Total Untreated F: 145
+#Total Treated F: 255
+#Total Control F: 201
+
+#Total Untreated M: 64 
+#Total Treated M: 112
+#Total Control M: 375

@@ -158,6 +158,21 @@ print(matches)
 
 print(len(matches))
 
+zero = data.columns[data.eq(0).all()]
+
+num_zero_columns = data.eq(0).all().sum()
+
+print(zero)
+
+print(num_zero_columns)
+
+zero_2 = data_2.columns[data_2.eq(0).all()]
+
+num_zero_columns_2 = data_2.eq(0).all().sum()
+
+print(zero_2)
+
+print(num_zero_columns_2)
 
 
 

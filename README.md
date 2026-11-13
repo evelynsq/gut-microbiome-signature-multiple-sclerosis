@@ -4,7 +4,6 @@
 (feel free to change anything around, just a rough draft so far)
 
 Install dependencies:
-
 ```
 conda env create -f environment.yml
 ```

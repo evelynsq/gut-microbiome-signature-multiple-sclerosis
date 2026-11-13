@@ -5,7 +5,11 @@ channels:
 # add any additional dependencies needed
 dependencies:
  - python=3.10
+ - fastexcel # for reading excel file with polars
  - ipykernel
  - matplotlib
  - numpy
+ - openpyxl # for reading excel file
  - pandas
+ - polars # for read excel file
+ - pyarrow # for read excel file

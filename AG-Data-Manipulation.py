@@ -106,3 +106,59 @@ print(pd.crosstab(merged_samples_species['treatment_status'], merged_samples_spe
 #Total Untreated M: 64 
 #Total Treated M: 112
 #Total Control M: 375
+
+##################################################################################################################
+#print(merged_samples_species.columns.tolist())
+#print(merged_samples_species_02.columns.tolist())
+
+##Species names are different##
+##Can also be seen looking at data and data_2##
+
+##Standardizing data_2 features to be condensed to just species##
+
+import re 
+
+def standardize_species(names):
+
+    standardized_names = [] 
+
+    for name in names:
+
+        match = re.search(r's__([^|]+)', name) #help here from AI with regex match -- better standardizing will be needed -- some species names have trailing letter symbols
+
+        if match:
+            species = match.group(1)
+        else:
+            species = name #no s__ pattern 
+
+        species = species.replace('_', ' ')
+
+        species = species.strip() #remove extra white space
+
+        standardized_names.append(species)
+
+    return standardized_names
+    
+results = standardize_species(data_2.columns.tolist())
+
+#print(sorted(results))
+
+#print(sorted(data.columns)) 
+
+##Matching lower-case standardized data_2 features to lower-case data features##
+
+##data_2 was standardized to match data## 
+
+lowercase_standardized_data_2_features = {result.lower() for result in results}
+lowercase_data_features = {col.lower().strip() for col in data.columns} 
+
+matches = sorted(lowercase_standardized_data_2_features.intersection(lowercase_data_features))
+
+print(matches)
+
+print(len(matches))
+
+
+
+
+

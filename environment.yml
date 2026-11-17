@@ -10,6 +10,8 @@ dependencies:
  - matplotlib
  - numpy
  - pandas
+ - scikit-bio
+ - scikit-learn
 
  # for reading in excel files
  - fastexcel

@@ -1,4 +1,4 @@
-This directory contains the abundance data values for both cohorts' datasets.
+This subdirectory contains the abundance data values for both cohorts' datasets.
 
 Each patient's microbiota abundances can be identified/mapped through:
 
